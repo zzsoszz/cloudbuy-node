@@ -1,0 +1,1759 @@
+---
+swagger: "2.0"
+info:
+  description: "This is a sample server cloudbuy server.\n"
+  version: "1.0.1"
+  title: "cloudbuy"
+  termsOfService: "http://helloreverb.com/terms/"
+  contact:
+    name: "137573155@qq.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+basePath: "/v2"
+schemes:
+- "http"
+paths:
+  /products:
+    post:
+      tags:
+      - "product"
+      summary: "添加产品"
+      description: ""
+      operationId: "addProduct"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "添加产品"
+        required: true
+        schema:
+          $ref: "#/definitions/body_1"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200"
+      x-swagger-router-controller: "Product"
+    put:
+      tags:
+      - "product"
+      summary: "更新产品"
+      description: "更新产品"
+      operationId: "updateProduct"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "最新的商品对象"
+        required: false
+        schema:
+          $ref: "#/definitions/body"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Product not found"
+        405:
+          description: "Validation exception"
+      x-swagger-router-controller: "Product"
+  /products/findByStatus:
+    get:
+      tags:
+      - "product"
+      summary: "根据产品状态查询产品"
+      description: "多个状态用逗号分隔"
+      operationId: "findProductsByStatus"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "status"
+        in: "query"
+        description: "状态列表"
+        required: false
+        type: "array"
+        items:
+          type: "string"
+        collectionFormat: "multi"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/inline_response_200"
+        400:
+          description: "Invalid status value"
+      x-swagger-router-controller: "Product"
+  /products/search:
+    get:
+      tags:
+      - "product"
+      summary: "商品搜索"
+      description: "商品搜索 filter=categoryId:1,status=1"
+      operationId: "productSearch"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "offset"
+        in: "query"
+        description: "起始索引"
+        required: false
+        type: "integer"
+        minimum: 0
+      - name: "limit"
+        in: "query"
+        description: "每页条数"
+        required: false
+        type: "integer"
+        default: 20
+        maximum: 50
+        minimum: 1
+      - name: "sort"
+        in: "query"
+        description: "排序字段 字段名1:DESC,字段名2:ASC"
+        required: false
+        type: "string"
+      - name: "keyword"
+        in: "query"
+        description: "搜索关键词"
+        required: false
+        type: "string"
+      - name: "filter"
+        in: "query"
+        description: "过滤条件  lastName:qingtian,age>25"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200_1"
+      x-swagger-router-controller: "Product"
+  /products/{productId}:
+    get:
+      tags:
+      - "product"
+      summary: "Find product by ID"
+      description: "根据ID查询产品"
+      operationId: "getProductsById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "产品ID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Products not found"
+      x-swagger-router-controller: "Product"
+    post:
+      tags:
+      - "product"
+      summary: "使用表单更新产品"
+      description: ""
+      operationId: "updateProductWithForm"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "ID of product that needs to be updated"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "formData"
+        description: "Updated name of the Product"
+        required: true
+        type: "string"
+      - name: "status"
+        in: "formData"
+        description: "Updated status of the Product"
+        required: true
+        type: "string"
+      responses:
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "Product"
+    delete:
+      tags:
+      - "product"
+      summary: "Deletes a Product"
+      description: ""
+      operationId: "deleteProduct"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "Product id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Invalid Product value"
+      x-swagger-router-controller: "Product"
+  /orders:
+    post:
+      tags:
+      - "order"
+      summary: "创建订单"
+      description: ""
+      operationId: "placeOrder"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "query"
+        description: "token"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "订单"
+        required: false
+        schema:
+          $ref: "#/definitions/body_2"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200_2"
+      x-swagger-router-controller: "Order"
+  /orders/search:
+    get:
+      tags:
+      - "order"
+      summary: "订单搜索"
+      description: "订单搜索"
+      operationId: "searchOrder"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "offset"
+        in: "query"
+        description: "起始索引"
+        required: false
+        type: "integer"
+        minimum: 0
+      - name: "limit"
+        in: "query"
+        description: "每页条数"
+        required: false
+        type: "integer"
+        default: 20
+        maximum: 50
+        minimum: 1
+      - name: "sort"
+        in: "query"
+        description: "排序字段 字段名1:DESC,字段名2:ASC"
+        required: false
+        type: "string"
+      - name: "filter"
+        in: "query"
+        description: "过滤条件  lastName:qingtian,age>25"
+        required: true
+        type: "string"
+      - name: "keyword"
+        in: "query"
+        description: "搜索关键词"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200_3"
+      x-swagger-router-controller: "Order"
+  /orders/belongto/{activityId}:
+    get:
+      tags:
+      - "order"
+      summary: "根据活动ID查所有订单"
+      description: "根据活动ID查所有订单"
+      operationId: "findOrderByActivityId"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "activityId"
+        in: "path"
+        description: "活动ID"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200_3"
+      x-swagger-router-controller: "Order"
+  /orders/{orderId}:
+    get:
+      tags:
+      - "order"
+      summary: "查询订单"
+      description: "根据订单ID查询订单"
+      operationId: "getOrderById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "query"
+        description: "token"
+        required: true
+        type: "string"
+      - name: "orderId"
+        in: "path"
+        description: "订单ID"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200_2"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Order not found"
+      x-swagger-router-controller: "Order"
+    delete:
+      tags:
+      - "order"
+      summary: "删除订单"
+      description: "删除订单"
+      operationId: "deleteOrder"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "orderId"
+        in: "path"
+        description: "被删除订单的ID"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Order not found"
+      x-swagger-router-controller: "Order"
+  /users:
+    post:
+      tags:
+      - "user"
+      summary: "创建用户"
+      description: "创建用户"
+      operationId: "createUser"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "用户对象"
+        required: false
+        schema:
+          $ref: "#/definitions/body_3"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/products_currentActivity_winuser"
+      x-swagger-router-controller: "User"
+  /users/createWithArray:
+    post:
+      tags:
+      - "user"
+      summary: "批量创建用户"
+      description: ""
+      operationId: "createUsersWithArrayInput"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "List of user object"
+        required: false
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/products_currentActivity_winuser"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "User"
+  /users/createWithList:
+    post:
+      tags:
+      - "user"
+      summary: "批量创建用户"
+      description: "批量创建用户"
+      operationId: "createUsersWithListInput"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "List of user object"
+        required: false
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/products_currentActivity_winuser"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "User"
+  /users/login:
+    get:
+      tags:
+      - "user"
+      summary: "用户登录"
+      description: "用户登录"
+      operationId: "loginUser"
+      produces:
+      - "application/xml"
+      parameters:
+      - name: "username"
+        in: "query"
+        description: "用户名(目前使用手机号)"
+        required: false
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "密码"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/products_currentActivity_winuser"
+        400:
+          description: "Invalid username/password supplied"
+      x-swagger-router-controller: "User"
+  /users/logout:
+    get:
+      tags:
+      - "user"
+      summary: "Logs out current logged in user session"
+      description: ""
+      operationId: "logoutUser"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "User"
+  /users/validateioncode/{username}:
+    get:
+      tags:
+      - "user"
+      summary: "获取验证码"
+      description: "获取验证码用于登录和注册"
+      operationId: "getValidateionCode"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "目前是手机号(以后可能支持邮箱或者账户名)"
+        required: true
+        type: "string"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "User"
+  /users/{username}:
+    get:
+      tags:
+      - "user"
+      summary: "根据登录名查询用户"
+      description: "根据登录名查询用户"
+      operationId: "getUserByName"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "目前是手机号(以后可能支持邮箱或者账户名)"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/products_currentActivity_winuser"
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+      x-swagger-router-controller: "User"
+    put:
+      tags:
+      - "user"
+      summary: "更新用户"
+      description: "更新用户"
+      operationId: "updateUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "目前是手机号(以后可能支持邮箱或者账户名)"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "新用户信息"
+        required: false
+        schema:
+          $ref: "#/definitions/body_4"
+      responses:
+        400:
+          description: "Invalid user supplied"
+        404:
+          description: "User not found"
+      x-swagger-router-controller: "User"
+    delete:
+      tags:
+      - "user"
+      summary: "删除用户"
+      description: "删除用户"
+      operationId: "deleteUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "目前是手机号(以后可能支持邮箱或者账户名)"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+      x-swagger-router-controller: "User"
+  /activitys:
+    post:
+      tags:
+      - "activity"
+      summary: "create new Activity"
+      description: "创建活动"
+      operationId: "createActivity"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "活动对象"
+        required: false
+        schema:
+          $ref: "#/definitions/body_5"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/products_currentActivity"
+      x-swagger-router-controller: "Activity"
+  /activitys/search:
+    get:
+      tags:
+      - "activity"
+      summary: "search activity"
+      description: "搜索活动"
+      operationId: "activitySearch"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "offset"
+        in: "query"
+        description: "起始索引"
+        required: false
+        type: "integer"
+        minimum: 0
+      - name: "limit"
+        in: "query"
+        description: "每页条数"
+        required: false
+        type: "integer"
+        default: 20
+        maximum: 50
+        minimum: 1
+      - name: "sort"
+        in: "query"
+        description: "排序字段 字段名1:DESC,字段名2:ASC"
+        required: false
+        type: "string"
+      - name: "filter"
+        in: "query"
+        description: "过滤条件  lastName:qingtian,age>25"
+        required: true
+        type: "string"
+      - name: "keyword"
+        in: "query"
+        description: "搜索关键词"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200_4"
+      x-spring-pageable: true
+      x-swagger-router-controller: "Activity"
+  /activitys/{id}:
+    get:
+      tags:
+      - "activity"
+      summary: "活动详情"
+      description: "根据活动ID获取活动详情"
+      operationId: "findActivityByID"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "活动ID"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/products_currentActivity"
+      x-swagger-router-controller: "Activity"
+  /activitys/current/{productId}:
+    get:
+      tags:
+      - "activity"
+      summary: "活动详情"
+      description: "根据产品ID获取当前活动详情"
+      operationId: "findCurrentActivityByProductId"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "产品ID"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/products_currentActivity"
+      x-swagger-router-controller: "Activity"
+  /activitys/history/{productId}:
+    get:
+      tags:
+      - "activity"
+      summary: "历史活动列表"
+      description: "根据产品ID获得所有活动"
+      operationId: "findAllActivityByProductId"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "商品ID"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/products_currentActivity"
+      x-swagger-router-controller: "Activity"
+  /categorys:
+    get:
+      tags:
+      - "category"
+      summary: "查询所有分类"
+      description: "查询所有分类"
+      operationId: "findCategorys"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200_5"
+      x-swagger-router-controller: "Category"
+    post:
+      tags:
+      - "category"
+      summary: "创建分类"
+      description: "创建分类"
+      operationId: "createCategory"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "分类对象"
+        required: false
+        schema:
+          $ref: "#/definitions/body_6"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/products_catagory"
+      x-swagger-router-controller: "Category"
+    delete:
+      tags:
+      - "category"
+      summary: "删除所有分类"
+      description: "删除所有分类"
+      operationId: "deleteAllCategory"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "删除所有分类"
+        required: false
+        schema:
+          $ref: "#/definitions/body_7"
+      responses:
+        200:
+          description: "successful operation"
+      x-swagger-router-controller: "Category"
+  /carts:
+    get:
+      tags:
+      - "cart"
+      summary: "查询购物车列表"
+      description: "查询购物车列表"
+      operationId: "findAll"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "query"
+        description: "token"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200_6"
+      x-swagger-router-controller: "Cart"
+    post:
+      tags:
+      - "cart"
+      summary: "创建购物车"
+      description: "创建购物车"
+      operationId: "createCart"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "query"
+        description: "token"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Created Cart object"
+        required: false
+        schema:
+          $ref: "#/definitions/body_8"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200_6_data"
+      x-swagger-router-controller: "Cart"
+    delete:
+      tags:
+      - "cart"
+      summary: "删除购物车所有项目"
+      description: "删除购物车所有项目"
+      operationId: "deleteAll"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "query"
+        description: "token"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+      x-swagger-router-controller: "Cart"
+  /carts/{cartId}:
+    get:
+      tags:
+      - "cart"
+      summary: "根据ID查询购物车项"
+      description: "根据ID查询购物车项"
+      operationId: "getCartItemByID"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "query"
+        description: "token"
+        required: true
+        type: "string"
+      - name: "cartId"
+        in: "path"
+        description: "购物车项ID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/inline_response_200_6_data"
+      x-swagger-router-controller: "Cart"
+    put:
+      tags:
+      - "cart"
+      summary: "更新购物车项"
+      description: ""
+      operationId: "updateCartItemByID"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "query"
+        description: "token"
+        required: true
+        type: "string"
+      - name: "cartId"
+        in: "path"
+        description: "购物车项ID"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "新购物车项"
+        required: false
+        schema:
+          $ref: "#/definitions/body_9"
+      responses:
+        400:
+          description: "Invalid CartItem ID"
+      x-swagger-router-controller: "Cart"
+    delete:
+      tags:
+      - "cart"
+      summary: "删除购物车项"
+      description: ""
+      operationId: "deleteCartItemByID"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "query"
+        description: "token"
+        required: true
+        type: "string"
+      - name: "cartId"
+        in: "path"
+        description: "购物车项ID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Invalid Product value"
+      x-swagger-router-controller: "Cart"
+  /article/{id}:
+    get:
+      tags:
+      - "article"
+      summary: "findByID"
+      description: "根据ID查找文章"
+      operationId: "findByID"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "keyword"
+        in: "query"
+        description: "搜索关键词"
+        required: false
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "Article ID"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/products_article"
+      x-swagger-router-controller: "Article"
+  /payment:
+    post:
+      tags:
+      - "payment"
+      summary: "支付订单"
+      description: ""
+      operationId: "createPayment"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "token"
+        in: "query"
+        description: "token"
+        required: true
+        type: "string"
+      - name: "bustype"
+        in: "query"
+        description: "业务类型  填写：activity_order"
+        required: true
+        type: "string"
+      - name: "busorder"
+        in: "query"
+        description: "业务订单号"
+        required: true
+        type: "string"
+      responses:
+        default:
+          description: "successful operation"
+      x-swagger-router-controller: "Payment"
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+  cloudbuy_auth:
+    type: "oauth2"
+    authorizationUrl: "http://qingtian.com/auth"
+    flow: "implicit"
+    scopes:
+      write_products: "modify products in your account"
+      read_products: "read your products"
+      write_orders: "modify orders in your account"
+      read_orders: "read your orders"
+definitions:
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      realName:
+        type: "string"
+        description: "真实姓名"
+      loginName:
+        type: "string"
+        description: "登录账号"
+      nickName:
+        type: "string"
+        description: "昵称"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+      userStatus:
+        type: "integer"
+        format: "int32"
+        description: "用户状态"
+      level:
+        type: "string"
+        description: "用户等级"
+      sex:
+        type: "string"
+        description: "性别"
+      address:
+        type: "string"
+        description: "地址"
+      avatarUrl:
+        type: "string"
+        description: "头像地址"
+      token:
+        type: "string"
+        description: "Token"
+  Category:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+  OrderActivity:
+    type: "object"
+    properties:
+      activityId:
+        type: "integer"
+        format: "int64"
+      count:
+        type: "integer"
+        format: "int64"
+        description: "购买人次"
+    description: "购买人次"
+  OrderResult:
+    type: "object"
+    properties:
+      activityId:
+        type: "integer"
+        format: "int64"
+        description: "活动编号"
+      activityNumber:
+        type: "string"
+        description: "活动期号"
+      ticketNumber:
+        type: "string"
+        description: "生成的抽奖号码"
+    description: "出票结果"
+  Order:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      orderActivity:
+        type: "array"
+        items:
+          $ref: "#/definitions/orders_orderActivity"
+      totalPrice:
+        type: "integer"
+        format: "int64"
+        description: "订单总额"
+      status:
+        type: "string"
+        description: "订单状态 1.待支付 2.待开奖(支付成功) 3.未中奖 4.已中奖 5.支付中 6.取消(支付失败)"
+      complete:
+        type: "boolean"
+      result:
+        type: "array"
+        items:
+          $ref: "#/definitions/orders_result"
+      createBy:
+        $ref: "#/definitions/products_currentActivity_winuser"
+    description: "订单"
+  CartItem:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      activityId:
+        type: "integer"
+        format: "int64"
+      count:
+        type: "integer"
+        format: "int64"
+    description: "购物车"
+  Activity:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        description: "活动编号"
+      activityNumber:
+        type: "string"
+        description: "活动期号"
+      winNumber:
+        type: "string"
+      winuser:
+        $ref: "#/definitions/products_currentActivity_winuser"
+      status:
+        type: "string"
+        description: "抽奖状态(1.进行中，2.揭晓中，3.完成)"
+      avaliable:
+        type: "integer"
+        format: "string"
+        description: "剩余人次"
+      beginTime:
+        type: "string"
+        format: "date-time"
+        description: "开始时间"
+      endTime:
+        type: "string"
+        format: "date-time"
+        description: "结束时间"
+    description: "抽奖活动"
+  Product:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        description: "商品名称"
+      currentActivity:
+        $ref: "#/definitions/products_currentActivity"
+      introduction:
+        type: "string"
+        description: "商品简介"
+      shortIntroduction:
+        type: "string"
+        description: "商品一句话描述"
+      detailUrl:
+        type: "string"
+        description: "商品详情地址"
+      price:
+        type: "integer"
+        format: "int64"
+        description: "商品价格"
+      priceType:
+        type: "string"
+        description: "价格分类 1 2 3"
+      limitFlag:
+        type: "integer"
+        format: "int32"
+        description: "是否限购"
+      limitMax:
+        type: "integer"
+        format: "int32"
+        description: "限定最大购买数"
+      total:
+        type: "integer"
+        format: "int32"
+        description: "总需人次"
+      largePhotoUrls:
+        type: "string"
+        description: "大图"
+      photoUrls:
+        type: "string"
+        description: "图片数组"
+      status:
+        type: "string"
+        description: "产品状态(0.待发布，1.已发布)"
+      article:
+        $ref: "#/definitions/products_article"
+      catagory:
+        $ref: "#/definitions/products_catagory"
+      tags:
+        type: "array"
+        items:
+          type: "string"
+    description: "商品"
+  Article:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        description: "文章标题"
+      richText:
+        type: "string"
+        description: "文章内容"
+    description: "图文详情"
+  products_currentActivity_winuser:
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      realName:
+        type: "string"
+        description: "真实姓名"
+      loginName:
+        type: "string"
+        description: "登录账号"
+      nickName:
+        type: "string"
+        description: "昵称"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+      userStatus:
+        type: "integer"
+        format: "int32"
+        description: "用户状态"
+      level:
+        type: "string"
+        description: "用户等级"
+      sex:
+        type: "string"
+        description: "性别"
+      address:
+        type: "string"
+        description: "地址"
+      avatarUrl:
+        type: "string"
+        description: "头像地址"
+      token:
+        type: "string"
+        description: "Token"
+  products_currentActivity:
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        description: "活动编号"
+      activityNumber:
+        type: "string"
+        description: "活动期号"
+      winNumber:
+        type: "string"
+      winuser:
+        $ref: "#/definitions/products_currentActivity_winuser"
+      status:
+        type: "string"
+        description: "抽奖状态(1.进行中，2.揭晓中，3.完成)"
+      avaliable:
+        type: "integer"
+        format: "string"
+        description: "剩余人次"
+      beginTime:
+        type: "string"
+        format: "date-time"
+        description: "开始时间"
+      endTime:
+        type: "string"
+        format: "date-time"
+        description: "结束时间"
+    description: "抽奖活动"
+  products_article:
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        description: "文章标题"
+      richText:
+        type: "string"
+        description: "文章内容"
+    description: "图文详情"
+  products_catagory:
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+  body:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        description: "商品名称"
+      currentActivity:
+        $ref: "#/definitions/products_currentActivity"
+      introduction:
+        type: "string"
+        description: "商品简介"
+      shortIntroduction:
+        type: "string"
+        description: "商品一句话描述"
+      detailUrl:
+        type: "string"
+        description: "商品详情地址"
+      price:
+        type: "integer"
+        format: "int64"
+        description: "商品价格"
+      priceType:
+        type: "string"
+        description: "价格分类 1 2 3"
+      limitFlag:
+        type: "integer"
+        format: "int32"
+        description: "是否限购"
+      limitMax:
+        type: "integer"
+        format: "int32"
+        description: "限定最大购买数"
+      total:
+        type: "integer"
+        format: "int32"
+        description: "总需人次"
+      largePhotoUrls:
+        type: "string"
+        description: "大图"
+      photoUrls:
+        type: "string"
+        description: "图片数组"
+      status:
+        type: "string"
+        description: "产品状态(0.待发布，1.已发布)"
+      article:
+        $ref: "#/definitions/products_article"
+      catagory:
+        $ref: "#/definitions/products_catagory"
+      tags:
+        type: "array"
+        items:
+          type: "string"
+    description: "商品"
+  inline_response_200:
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        description: "商品名称"
+      currentActivity:
+        $ref: "#/definitions/products_currentActivity"
+      introduction:
+        type: "string"
+        description: "商品简介"
+      shortIntroduction:
+        type: "string"
+        description: "商品一句话描述"
+      detailUrl:
+        type: "string"
+        description: "商品详情地址"
+      price:
+        type: "integer"
+        format: "int64"
+        description: "商品价格"
+      priceType:
+        type: "string"
+        description: "价格分类 1 2 3"
+      limitFlag:
+        type: "integer"
+        format: "int32"
+        description: "是否限购"
+      limitMax:
+        type: "integer"
+        format: "int32"
+        description: "限定最大购买数"
+      total:
+        type: "integer"
+        format: "int32"
+        description: "总需人次"
+      largePhotoUrls:
+        type: "string"
+        description: "大图"
+      photoUrls:
+        type: "string"
+        description: "图片数组"
+      status:
+        type: "string"
+        description: "产品状态(0.待发布，1.已发布)"
+      article:
+        $ref: "#/definitions/products_article"
+      catagory:
+        $ref: "#/definitions/products_catagory"
+      tags:
+        type: "array"
+        items:
+          type: "string"
+    description: "商品"
+  body_1:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        description: "商品名称"
+      currentActivity:
+        $ref: "#/definitions/products_currentActivity"
+      introduction:
+        type: "string"
+        description: "商品简介"
+      shortIntroduction:
+        type: "string"
+        description: "商品一句话描述"
+      detailUrl:
+        type: "string"
+        description: "商品详情地址"
+      price:
+        type: "integer"
+        format: "int64"
+        description: "商品价格"
+      priceType:
+        type: "string"
+        description: "价格分类 1 2 3"
+      limitFlag:
+        type: "integer"
+        format: "int32"
+        description: "是否限购"
+      limitMax:
+        type: "integer"
+        format: "int32"
+        description: "限定最大购买数"
+      total:
+        type: "integer"
+        format: "int32"
+        description: "总需人次"
+      largePhotoUrls:
+        type: "string"
+        description: "大图"
+      photoUrls:
+        type: "string"
+        description: "图片数组"
+      status:
+        type: "string"
+        description: "产品状态(0.待发布，1.已发布)"
+      article:
+        $ref: "#/definitions/products_article"
+      catagory:
+        $ref: "#/definitions/products_catagory"
+      tags:
+        type: "array"
+        items:
+          type: "string"
+    description: "商品"
+  inline_response_200_1:
+    properties:
+      total:
+        type: "integer"
+        format: "int64"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/inline_response_200"
+  orders_orderActivity:
+    properties:
+      activityId:
+        type: "integer"
+        format: "int64"
+      count:
+        type: "integer"
+        format: "int64"
+        description: "购买人次"
+    description: "购买人次"
+  orders_result:
+    properties:
+      activityId:
+        type: "integer"
+        format: "int64"
+        description: "活动编号"
+      activityNumber:
+        type: "string"
+        description: "活动期号"
+      ticketNumber:
+        type: "string"
+        description: "生成的抽奖号码"
+    description: "出票结果"
+  body_2:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      orderActivity:
+        type: "array"
+        items:
+          $ref: "#/definitions/orders_orderActivity"
+      totalPrice:
+        type: "integer"
+        format: "int64"
+        description: "订单总额"
+      status:
+        type: "string"
+        description: "订单状态 1.待支付 2.待开奖(支付成功) 3.未中奖 4.已中奖 5.支付中 6.取消(支付失败)"
+      complete:
+        type: "boolean"
+      result:
+        type: "array"
+        items:
+          $ref: "#/definitions/orders_result"
+      createBy:
+        $ref: "#/definitions/products_currentActivity_winuser"
+    description: "订单"
+  inline_response_200_2:
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      orderActivity:
+        type: "array"
+        items:
+          $ref: "#/definitions/orders_orderActivity"
+      totalPrice:
+        type: "integer"
+        format: "int64"
+        description: "订单总额"
+      status:
+        type: "string"
+        description: "订单状态 1.待支付 2.待开奖(支付成功) 3.未中奖 4.已中奖 5.支付中 6.取消(支付失败)"
+      complete:
+        type: "boolean"
+      result:
+        type: "array"
+        items:
+          $ref: "#/definitions/orders_result"
+      createBy:
+        $ref: "#/definitions/products_currentActivity_winuser"
+    description: "订单"
+  inline_response_200_3:
+    properties:
+      total:
+        type: "integer"
+        format: "int64"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/inline_response_200_2"
+  body_3:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      realName:
+        type: "string"
+        description: "真实姓名"
+      loginName:
+        type: "string"
+        description: "登录账号"
+      nickName:
+        type: "string"
+        description: "昵称"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+      userStatus:
+        type: "integer"
+        format: "int32"
+        description: "用户状态"
+      level:
+        type: "string"
+        description: "用户等级"
+      sex:
+        type: "string"
+        description: "性别"
+      address:
+        type: "string"
+        description: "地址"
+      avatarUrl:
+        type: "string"
+        description: "头像地址"
+      token:
+        type: "string"
+        description: "Token"
+  body_4:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      realName:
+        type: "string"
+        description: "真实姓名"
+      loginName:
+        type: "string"
+        description: "登录账号"
+      nickName:
+        type: "string"
+        description: "昵称"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+      userStatus:
+        type: "integer"
+        format: "int32"
+        description: "用户状态"
+      level:
+        type: "string"
+        description: "用户等级"
+      sex:
+        type: "string"
+        description: "性别"
+      address:
+        type: "string"
+        description: "地址"
+      avatarUrl:
+        type: "string"
+        description: "头像地址"
+      token:
+        type: "string"
+        description: "Token"
+  body_5:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        description: "活动编号"
+      activityNumber:
+        type: "string"
+        description: "活动期号"
+      winNumber:
+        type: "string"
+      winuser:
+        $ref: "#/definitions/products_currentActivity_winuser"
+      status:
+        type: "string"
+        description: "抽奖状态(1.进行中，2.揭晓中，3.完成)"
+      avaliable:
+        type: "integer"
+        format: "string"
+        description: "剩余人次"
+      beginTime:
+        type: "string"
+        format: "date-time"
+        description: "开始时间"
+      endTime:
+        type: "string"
+        format: "date-time"
+        description: "结束时间"
+    description: "抽奖活动"
+  inline_response_200_4:
+    properties:
+      total:
+        type: "integer"
+        format: "int64"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/products_currentActivity"
+  inline_response_200_5:
+    properties:
+      total:
+        type: "integer"
+        format: "int64"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/products_catagory"
+  body_6:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+  body_7:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+  inline_response_200_6_data:
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      activityId:
+        type: "integer"
+        format: "int64"
+      count:
+        type: "integer"
+        format: "int64"
+    description: "购物车"
+  inline_response_200_6:
+    properties:
+      total:
+        type: "integer"
+        format: "int64"
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/inline_response_200_6_data"
+  body_8:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      activityId:
+        type: "integer"
+        format: "int64"
+      count:
+        type: "integer"
+        format: "int64"
+    description: "购物车"
+  body_9:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      activityId:
+        type: "integer"
+        format: "int64"
+      count:
+        type: "integer"
+        format: "int64"
+    description: "购物车"
+parameters:
+  offsetParam:
+    name: "offset"
+    in: "query"
+    description: "起始索引"
+    required: false
+    type: "integer"
+    minimum: 0
+  limitParam:
+    name: "limit"
+    in: "query"
+    description: "每页条数"
+    required: false
+    type: "integer"
+    default: 20
+    maximum: 50
+    minimum: 1
+  sortParam:
+    name: "sort"
+    in: "query"
+    description: "排序字段 字段名1:DESC,字段名2:ASC"
+    required: false
+    type: "string"
+  keywordParam:
+    name: "keyword"
+    in: "query"
+    description: "搜索关键词"
+    required: false
+    type: "string"
+  tokenParam:
+    name: "token"
+    in: "query"
+    description: "token"
+    required: true
+    type: "string"
+  filterParam:
+    name: "filter"
+    in: "query"
+    description: "过滤条件  lastName:qingtian,age>25"
+    required: true
+    type: "string"
