@@ -1,5 +1,6 @@
 'use strict';
 var knex=require("../db/connect.js");
+var JSONStream = require('JSONStream');
 
 exports.activitySearch = function(args, res, next) {
   /**
@@ -42,25 +43,32 @@ exports.activitySearch = function(args, res, next) {
   } ]
 };
   if (Object.keys(examples).length > 0) {
-    knex.select().from('users')
-      .stream()
-      .on('error', function (err) {
-           console.log(err);
-      })
-      .on('fields', function (fields) {
-          console.log(fields);
-      })
-      .on('result', function (row) {
-          console.log(row);
-      })
-      .on('end', function () {
-         console.log("end");
-      })
-      .on("data",function(data)
-        {
-            console.log(data);
-        }
-      );
+
+     knex.select().from('users')
+     .stream().on("data",function(data){
+       console.log("aaaaaa:",data);
+     });
+     //.pipe(JSONStream.stringify())
+     
+     //.pipe(process.stdout);
+
+      // .on('error', function (err) {
+      //      console.log(err);
+      // })
+      // .on('fields', function (fields) {
+      //     console.log(fields);
+      // })
+      // .on('result', function (row) {
+      //     console.log(row);
+      // })
+      // .on('end', function () {
+      //    console.log("end");
+      // })
+      // .on("data",function(data)
+      //   {
+      //       console.log(data);
+      //   }
+      // );
     // (function(stream){
     //     console.log();
     // }).then(function(result){
