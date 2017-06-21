@@ -42,9 +42,30 @@ exports.activitySearch = function(args, res, next) {
   } ]
 };
   if (Object.keys(examples).length > 0) {
-    knex.select().from('users').then(function(result){
-      console.log(result);
-    });
+    knex.select().from('users')
+      .stream()
+      .on('error', function (err) {
+           console.log(err);
+      })
+      .on('fields', function (fields) {
+          console.log(fields);
+      })
+      .on('result', function (row) {
+          console.log(row);
+      })
+      .on('end', function () {
+         console.log("end");
+      })
+      .on("data",function(data)
+        {
+            console.log(data);
+        }
+      );
+    // (function(stream){
+    //     console.log();
+    // }).then(function(result){
+    //   console.log(result);
+    // });
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
   } else {
