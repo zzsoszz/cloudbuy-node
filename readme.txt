@@ -5,6 +5,15 @@ https://github.com/brianc/node-pg-query-stream
 http://fe.meituan.com/stream-in-action.html
 http://sequelize.readthedocs.io/en/latest/docs/transactions/
 https://github.com/othiym23/node-continuation-local-storage
+https://github.com/inversify/inversify-express-example
+
+https://www.quora.com/Whats-your-take-on-server-side-dependency-injection-tools-in-node-js 
+Introducing InversifyJS
+http://blog.wolksoftware.com/introducing-inversifyjs 
+TypeScript 中的 Decorator & 元数据反射：从小白到专家（部分 IV）
+https://zhuanlan.zhihu.com/p/20743919 
+http://blog.wolksoftware.com/the-current-state-of-dependency-inversion-in-javascript 
+
 
 
 var stream = require('stream');
