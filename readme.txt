@@ -3,6 +3,8 @@ https://github.com/jabez128/stream-handbook
 https://github.com/htoooth/mississippi2#split
 https://github.com/brianc/node-pg-query-stream
 http://fe.meituan.com/stream-in-action.html
+http://sequelize.readthedocs.io/en/latest/docs/transactions/
+https://github.com/othiym23/node-continuation-local-storage
 
 
 var stream = require('stream');

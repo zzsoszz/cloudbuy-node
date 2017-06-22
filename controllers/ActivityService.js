@@ -43,15 +43,13 @@ exports.activitySearch = function(args, res, next) {
   } ]
 };
   if (Object.keys(examples).length > 0) {
-
+    
      knex.select().from('users')
      .stream().on("data",function(data){
        console.log("aaaaaa:",data);
      });
      //.pipe(JSONStream.stringify())
-     
      //.pipe(process.stdout);
-
       // .on('error', function (err) {
       //      console.log(err);
       // })
