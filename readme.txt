@@ -5,6 +5,9 @@ https://github.com/brianc/node-pg-query-stream
 http://fe.meituan.com/stream-in-action.html
 http://sequelize.readthedocs.io/en/latest/docs/transactions/
 https://github.com/othiym23/node-continuation-local-storage
+ramda.cn/docs/#and
+ramdajs.com/docs/#pluck
+
 
 
 var stream = require('stream');
