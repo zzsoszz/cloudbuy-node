@@ -1,11 +1,7 @@
 var knex=require("../db/connect.js");
 var elasticsearch = require('elasticsearch');
-
+var client=require("./ElasticSearchClient");
 exports.createIndex=function()
 {
-    var client = new elasticsearch.Client({
-        host: 'localhost:9200',
-        log: 'trace'
-    });
+    client.getInstance().indices();
 }
-
