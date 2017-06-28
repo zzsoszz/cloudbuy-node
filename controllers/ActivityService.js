@@ -1,6 +1,6 @@
 'use strict';
 var knex=require("../db/connect.js");
-var JSONStream = require('JSONStream');
+// var JSONStream = require('JSONStream');
 
 exports.activitySearch = function(args, res, next) {
   /**
@@ -54,7 +54,7 @@ exports.activitySearch = function(args, res, next) {
   } else {
     res.end();
   }
-  
+
   
   
 }
