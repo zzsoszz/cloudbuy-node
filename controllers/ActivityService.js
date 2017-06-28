@@ -55,7 +55,8 @@ exports.activitySearch = function(args, res, next) {
     res.end();
   }
   
-
+  
+  
 }
 
 exports.createActivity = function(args, res, next) {
