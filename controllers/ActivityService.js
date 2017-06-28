@@ -45,6 +45,7 @@ exports.activitySearch = function(args, res, next) {
 
 
   if (Object.keys(examples).length > 0) {
+    console.log(args.limit.value);
     knex.select().from('users')
     .stream().on("data",function(data){
        console.log("aaaaaa:",data);
@@ -55,7 +56,6 @@ exports.activitySearch = function(args, res, next) {
     res.end();
   }
 
-  
   
 }
 

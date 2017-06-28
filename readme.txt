@@ -5,10 +5,10 @@ https://github.com/brianc/node-pg-query-stream
 http://fe.meituan.com/stream-in-action.html
 http://sequelize.readthedocs.io/en/latest/docs/transactions/
 https://github.com/othiym23/node-continuation-local-storage
-<<<<<<< HEAD
+
 ramda.cn/docs/#and
 ramdajs.com/docs/#pluck
-=======
+
 https://github.com/inversify/inversify-express-example
 
 https://www.quora.com/Whats-your-take-on-server-side-dependency-injection-tools-in-node-js 
@@ -17,8 +17,8 @@ http://blog.wolksoftware.com/introducing-inversifyjs
 TypeScript 中的 Decorator & 元数据反射：从小白到专家（部分 IV）
 https://zhuanlan.zhihu.com/p/20743919 
 http://blog.wolksoftware.com/the-current-state-of-dependency-inversion-in-javascript 
->>>>>>> cb23451766faf21dd94edc03ff5b8c18ad2a4b4f
-
+https://github.com/elastic/elasticsearch-js
+https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html
 
 
 var stream = require('stream');
