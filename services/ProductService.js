@@ -8,3 +8,4 @@ exports.createIndex=function()
         log: 'trace'
     });
 }
+
