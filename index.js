@@ -5,7 +5,7 @@ var http = require('http');
 var swaggerTools = require('swagger-tools');
 var jsyaml = require('js-yaml');
 var fs = require('fs');
-var systemService = require('./controllers/SystemService.js');
+var systemService = require('./services/SystemService.js');
 var serverPort = 8080;
 
 

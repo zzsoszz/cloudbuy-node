@@ -2,6 +2,7 @@
 var schedule = require('node-schedule');
 var knex=require("../db/connect.js");
 var create=require("../db/create-database.js");
+var productService=require("./ProductService.js");
 exports.init = function() {
     /**
       var j = schedule.scheduleJob("*\/5 * * * * *", function(){
@@ -14,7 +15,7 @@ exports.init = function() {
             console.log(data);
         });
     });
-
+    productService.createIndex();
     // var user= knex('cuser').insert({phone: '13730666347',password:"123456"}).returning('*').then(function(data){
     //     console.log(data);
     // });
