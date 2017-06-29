@@ -4,11 +4,12 @@ exports.getInstance=function()
     var client=null;
     return (function(){
         if(!client){
-            var client = new elasticsearch.Client({
+            client = new elasticsearch.Client({
                 host: 'localhost:9200',
                 log: 'trace'
             });
         }
+        console.log("client",client);
         return client;
     })();
 }

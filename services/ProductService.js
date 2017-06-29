@@ -3,5 +3,11 @@ var elasticsearch = require('elasticsearch');
 var client=require("./ElasticSearchClient");
 exports.createIndex=function()
 {
-    client.getInstance().indices.create("product");
+    console.log("create index");
+    client.getInstance().indices.create("product").then(function(result){
+        console.log("result",result);
+    }).catch(function(e){
+        console.log(e);
+    });
+    console.log("create index end");
 }
