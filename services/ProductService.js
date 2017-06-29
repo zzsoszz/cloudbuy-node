@@ -4,7 +4,7 @@ var client=require("./ElasticSearchClient");
 exports.createIndex=function()
 {
     console.log("create index");
-    client.getInstance().indices.create("product").then(function(result){
+    client.getInstance().indices.create({index:"product"}).then(function(result){
         console.log("result",result);
     }).catch(function(e){
         console.log(e);
