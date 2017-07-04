@@ -21,7 +21,7 @@ superagent.get('http://tool.chinaz.com/kwevaluate?kw=%E7%99%BE%E5%BA%A6')
         var $ = cheerio.load(res.text);
         var text=$('body > div:nth-child(5) > div > ul > li.clearfix.lidtCont01 > div:nth-child(2) > a').html();
         console.log(text);
-
+        
      }
      
   });
