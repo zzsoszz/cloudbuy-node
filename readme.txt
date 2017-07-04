@@ -55,7 +55,11 @@ http://www.tuicool.com/articles/fQviEb
 bluebird 3.1/Node.js: 关于Promise.all, map, reduce, mapSeries, each方法
 
 
+http://taobaofed.org/blog/2016/01/14/nodejs-memory-leak-analyze/
+记一次 Node.js 应用内存暴涨分析
 
+深入JVM之GCRoots
+http://blog.csdn.net/u010744711/article/details/51371535 
 
 
 
