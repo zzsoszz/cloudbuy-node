@@ -86,6 +86,95 @@ https://github.com/elastic/elasticsearch-js
 https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html
 
 
+
+https://caolan.github.io/async/
+12:32:20
+qingtian 2017/7/5 12:32:20
+native promises vs bluebird promises
+https://jsperf.com/native-promises-vs-bluebird-promises
+
+qingtian 2017/7/5 12:33:00
+promisifyAll
+
+qingtian 2017/7/5 12:33:05
+https://medium.com/@mlee277/es6-promises-vs-bluebird-7f6ef5f5362a
+12:34:45
+qingtian 2017/7/5 12:34:45
+https://cnodejs.org/topic/56cd6234e135f51a1ae89b15
+
+qingtian 2017/7/5 12:34:49
+自己动手实现一个简单的Promise/A+的Promisify函数
+
+qingtian 2017/7/5 12:36:10
+https://cnodejs.org/topic/56cd6234e135f51a1ae89b15
+
+qingtian 2017/7/5 12:36:36
+https://github.com/iyuq/promisify
+13:15:21
+qingtian 2017/7/5 13:15:21
+https://www.zhihu.com/question/19575320
+13:21:51
+qingtian 2017/7/5 13:21:51
+https://www.nyse.com/index
+14:18:48
+qingtian 2017/7/5 14:18:48
+https://github.com/kriskowal/q
+14:42:42
+qingtian 2017/7/5 14:42:42
+https://xueqiu.com/
+15:28:15
+qingtian 2017/7/5 15:28:15
+http://www.cnblogs.com/zhiyishou/p/4711735.html 
+
+
+qingtian 2017/7/5 15:28:26
+nodejs与Promise的思想碰撞
+
+qingtian 2017/7/5 15:29:14
+https://cnodejs.org/topic/560dbc826a1ed28204a1e7deNode.js最新技术栈之Promise篇
+
+qingtian 2017/7/5 15:29:24
+https://cnodejs.org/topic/560dbc826a1ed28204a1e7de
+15:33:15
+qingtian 2017/7/5 15:33:15
+http://blog.fens.me/nodejs-async/
+15:43:54
+qingtian 2017/7/5 15:43:54
+http://blog.csdn.net/hellochenlu/article/details/50081775 
+
+
+qingtian 2017/7/5 15:44:01
+ Nodejs-使用 promise 替代回调函数
+
+qingtian 2017/7/5 15:44:35
+http://wiki.jikexueyuan.com/project/node-lessons/promise.html
+
+qingtian 2017/7/5 15:44:43
+使用 promise 替代回调函数
+15:55:54
+qingtian 2017/7/5 15:55:54
+https://www.promisejs.org/implementing/#then
+
+qingtian 2017/7/5 15:56:01
+Implementing
+
+qingtian 2017/7/5 15:56:08
+promise实现
+16:02:31
+qingtian 2017/7/5 16:02:31
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then
+
+qingtian 2017/7/5 16:02:36
+Promise.prototype.then()
+
+qingtian 2017/7/5 16:02:44
+https://www.promisejs.org/implementing/#then
+
+
+
+
+
+
 var stream = require('stream');
 var util = require('util');
 util.inherits(Answers, stream.Readable);
