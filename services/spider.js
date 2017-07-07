@@ -9,6 +9,7 @@ superagent.get('http://tool.chinaz.com/kwevaluate?kw=%E7%99%BE%E5%BA%A6')
     if (err || !res.ok) {
        console.log('Oh no! error');
      } else {
+       
         // sres.text 里面存储着网页的 html 内容，将它传给 cheerio.load 之后
         // 就可以得到一个实现了 jquery 接口的变量，我们习惯性地将它命名为 `$`
         // 剩下就都是 jquery 的内容了
