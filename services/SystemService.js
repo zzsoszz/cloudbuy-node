@@ -17,8 +17,10 @@ exports.init = function() {
         var user= knex('cuser').insert({phone: '13730666347',password:"123456"}).returning('*').then(function(data){
             console.log(data);
         });
+        
         productService.createIndex();
     });
-    
+
+
 }
 

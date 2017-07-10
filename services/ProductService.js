@@ -40,15 +40,30 @@ exports.createIndex=function()
         id: '1',
         body: {
             title: 'Test 1',
-            productName: "苹果"
+            productName: "iphone 7 plus"
         }
     }, function (error, response) {
         console.log("response",response);
     });
 
+
+    instance.index({
+        index: 'product',
+        type: 'product',
+        id: '2',
+        body: {
+            title: 'Test 1',
+            productName: "华为"
+        }
+    }, function (error, response) {
+        console.log("response",response);
+    });
+
+
     /*
         http://caolan.github.io/async/docs.html#series
      */
+
     instance.search(
         {
             index: 'product',
@@ -66,5 +81,4 @@ exports.createIndex=function()
     );
     
     console.log("create index end");
-
 }
