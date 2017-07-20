@@ -107,6 +107,8 @@ exports.createDatabase=function()
       table.timestamps();
     })
     ;
+
+
     // .then(function(result){
     //     console.log(result);
     // })
